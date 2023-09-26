@@ -8,14 +8,12 @@
     tools:context=".MainActivity">
 
 
-<!--    <ImageView-->
-<!--        android:id="@+id/imageView"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="match_parent"-->
-<!--        android:scaleType="centerCrop"-->
-<!--        android:src="@drawable/bg_geometry" />-->
-
-
+    <!--    <ImageView-->
+    <!--        android:id="@+id/imageView"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="match_parent"-->
+    <!--        android:scaleType="centerCrop"-->
+    <!--        android:src="@drawable/bg_geometry" />-->
 
 
     <TextView
@@ -33,35 +31,58 @@
         app:layout_constraintTop_toTopOf="parent" />
 
 
+
     <EditText
-        android:id="@+id/Username"
+        android:id="@+id/etPassword"
         android:layout_width="245dp"
         android:layout_height="53dp"
         android:layout_marginBottom="251dp"
-        android:backgroundTint="@color/gray_light"
+        android:background="@color/gray_light"
         android:fontFamily="@font/font_family_nunito"
         android:hint="Password"
-        android:textColorHint="@color/white"
-        android:textColor="#FFFFFF"
+        android:inputType="textPassword"
+        android:maxLength="18"
+        android:textColor="#000000"
+        android:textColorHint="@color/black"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
+    <ImageView
+        android:layout_width="53dp"
+        android:layout_height="53dp"
+        android:src="@drawable/ic_passwordsfield"
+        app:layout_constraintBottom_toBottomOf="@+id/etPassword"
+        app:layout_constraintEnd_toStartOf="@+id/etPassword"
+        app:layout_constraintTop_toTopOf="@+id/etPassword" />
+
+
     <EditText
+        android:id="@+id/etUsername"
         android:layout_width="245dp"
         android:layout_height="53dp"
         android:layout_marginVertical="42dp"
-        android:backgroundTint="@color/gray_light"
+        android:background="@color/gray_light"
         android:fontFamily="@font/font_family_nunito"
-        android:onClick="goToSignIn"
         android:hint="Username"
-        android:textColorHint="@color/white"
-        android:textColor="#FFFFFF"
+        android:maxLength="12"
+        android:onClick="goToSignIn"
+        android:textColor="#000000"
+        android:textColorHint="@color/black"
         android:textSize="18sp"
-        app:layout_constraintBottom_toTopOf="@+id/Username"
+        app:layout_constraintBottom_toTopOf="@+id/etPassword"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageView
+        android:layout_width="53dp"
+        android:layout_height="53dp"
+        android:src="@drawable/ic_usernamefield"
+        app:layout_constraintBottom_toBottomOf="@+id/etUsername"
+        app:layout_constraintEnd_toStartOf="@+id/etUsername"
+        app:layout_constraintTop_toTopOf="@+id/etUsername" />
+
 
     <Button
         android:id="@+id/button"
@@ -75,6 +96,22 @@
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/bSubmitLogin"
+        android:layout_width="154dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="72dp"
+        android:backgroundTint="#9FD1FF"
+        android:fontFamily="@font/font_family_nunito"
+        android:onClick="isValidCredentials"
+        android:text="Log In"
+        android:textAllCaps="true"
+        android:textColor="#FFFFFF"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etPassword" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

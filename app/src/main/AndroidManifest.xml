@@ -13,6 +13,12 @@
         android:theme="@style/Theme.UndergroundRiga"
         tools:targetApi="31">
         <activity
+            android:name=".MainActivity2"
+            android:exported="false" />
+        <activity
+            android:name=".GoogleMap"
+            android:exported="false" />
+        <activity
             android:name=".ActivityLogin"
             android:exported="false" />
         <activity
