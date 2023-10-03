@@ -22,6 +22,7 @@ internal class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         val mapFragment = supportFragmentManager
             .findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
+
     }
 
     /**
@@ -36,12 +37,20 @@ internal class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
 
-        // Add a marker in Sydney and move the camera
-        val sydney = LatLng(-34.0, 151.0)
+        // Change the coordinates to Rīga, Latvia
+        val rigaLatLng = LatLng(56.95306407782407, 24.10447936633287)
+
+        // Change the title to "Rīga, Latvia, Rīgas Valsts Tehnikums"
         mMap.addMarker(MarkerOptions()
-            .position(sydney)
-            .title("Marker in Sydney"))
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney))
+            .position(rigaLatLng)
+            .title("Rīgas Valsts Tehnikums"))
+
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(rigaLatLng, 14f))
+
+
     }
+
+
+
 }
 

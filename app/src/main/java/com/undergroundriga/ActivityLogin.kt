@@ -40,7 +40,9 @@ class ActivityLogin : AppCompatActivity() {
     }
 
     private fun isValidCredentials(username: String, password: String): Boolean {
-        if (username.isNotEmpty() && password.isNotEmpty()) {
+        if (username=="admin" && password=="admin") {
+            val intent = Intent(this, MapsActivity::class.java)
+            startActivity(intent)
             return true
         } else {
             return false
@@ -51,6 +53,7 @@ class ActivityLogin : AppCompatActivity() {
         val intent = Intent(this, MainActivity::class.java)
         startActivity(intent)
     }
+
 
     data class User(val id: Int, val username: String, val password: String)
 
