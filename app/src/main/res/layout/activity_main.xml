@@ -30,6 +30,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
+        android:onClick="goToSignUp"
         android:id="@+id/button2"
         android:layout_width="245dp"
         android:layout_height="53dp"

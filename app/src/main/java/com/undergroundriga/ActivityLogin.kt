@@ -40,14 +40,23 @@ class ActivityLogin : AppCompatActivity() {
     }
 
     private fun isValidCredentials(username: String, password: String): Boolean {
-        if (username=="admin" && password=="admin") {
-            val intent = Intent(this, MapsActivity::class.java)
-            startActivity(intent)
-            return true
-        } else {
-            return false
+        val db = DataBaseHandler(this)
+        val data = db.readDataUsers()
+
+        for (i in 0 until data.size) {
+            val user = data[i]
+            if (user.username == username && user.password == password) {
+                // Username and password match a record in the database
+                val intent = Intent(this, MapsActivity::class.java)
+                startActivity(intent)
+                return true
+            }
         }
+
+        // No matching username and password found in the database
+        return false
     }
+
 
     fun goToMain(view: View) {
         val intent = Intent(this, MainActivity::class.java)

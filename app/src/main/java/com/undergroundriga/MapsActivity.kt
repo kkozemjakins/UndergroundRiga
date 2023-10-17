@@ -25,27 +25,28 @@ internal class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
     }
 
-    /**
-     * Manipulates the map once available.
-     * This callback is triggered when the map is ready to be used.
-     * This is where we can add markers or lines, add listeners or move the camera. In this case,
-     * we just add a marker near Sydney, Australia.
-     * If Google Play services is not installed on the device, the user will be prompted to install
-     * it inside the SupportMapFragment. This method will only be triggered once the user has
-     * installed Google Play services and returned to the app.
-     */
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
 
-        // Change the coordinates to Rīga, Latvia
-        val rigaLatLng = LatLng(56.95306407782407, 24.10447936633287)
+        val rvt = LatLng(56.95306407782407, 24.10447936633287)
 
-        // Change the title to "Rīga, Latvia, Rīgas Valsts Tehnikums"
+        val someWhere = LatLng(55.95306407782407, 24.10447936633287)
+
+        val MadMaxHome = LatLng(56.958674, 23.605505)
+
         mMap.addMarker(MarkerOptions()
-            .position(rigaLatLng)
+            .position(someWhere)
+            .title("Random Place"))
+
+        mMap.addMarker(MarkerOptions()
+            .position(rvt)
             .title("Rīgas Valsts Tehnikums"))
 
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(rigaLatLng, 14f))
+        mMap.addMarker(MarkerOptions()
+            .position(MadMaxHome)
+            .title("Maksima housik"))
+
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(rvt, 14f))
 
 
     }

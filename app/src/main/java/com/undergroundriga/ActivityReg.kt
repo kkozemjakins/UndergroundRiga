@@ -2,18 +2,50 @@ package com.undergroundriga
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Button
+import android.widget.EditText
+import android.widget.Toast
+
 
 class ActivityReg : AppCompatActivity() {
+
+    private lateinit var usernameEditText: EditText
+    private lateinit var passwordEditText: EditText
+    private lateinit var regButton: Button
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_reg)
 
-        btn_insert.setOnClickListner(
-            if (etvUsername.text.toString().length > 0 &&
-                etvPassword.text.toString().length > 0) ){
+        usernameEditText = findViewById(R.id.etPassword)
+        passwordEditText = findViewById(R.id.etUsername)
+        regButton = findViewById(R.id.bSubmitReg)
+
+        regButton.setOnClickListener {
+            // Handle login button click here
+            val username = usernameEditText.text.toString()
+            val password = passwordEditText.text.toString()
+            (
+            if(username.length > 0 &&
+                password.length > 0) {
+                var user = User(username,password)
+                var db = DataBaseHandler(this)
+                db.insertData(user)
+
+                var data = db.readDataUsers()
+                var msg = ""
+                for (i in 0..(data.size - 1)) {
+                    msg = (data.get(i).id.toString() + " " + data.get(i).username + " " + data.get(i).password + "\n")
+                }
+                Toast.makeText(this,msg,Toast.LENGTH_SHORT).show()
+
+
+            }else{
+                Toast.makeText(this,"Please Fill All Data`s",Toast.LENGTH_SHORT).show()
+
+            })
+
 
         }
 
     }
 }
-/*https://www.youtube.com/watch?v=OxHNcCXnxnE*/

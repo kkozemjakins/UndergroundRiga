@@ -15,4 +15,9 @@ class MainActivity : AppCompatActivity() {
         val intent = Intent(this, ActivityLogin::class.java)
         startActivity(intent)
     }
+
+    fun goToSignUp(view: View) {
+        val intent = Intent(this, ActivityReg::class.java)
+        startActivity(intent)
+    }
 }
