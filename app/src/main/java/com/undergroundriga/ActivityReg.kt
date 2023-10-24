@@ -24,17 +24,18 @@ class ActivityReg : AppCompatActivity() {
             // Handle login button click here
             val username = usernameEditText.text.toString()
             val password = passwordEditText.text.toString()
+            val role = "0"
             (
             if(username.length > 0 &&
                 password.length > 0) {
-                var user = User(username,password)
+                var user = User(username,password, role)
                 var db = DataBaseHandler(this)
                 db.insertData(user)
 
                 var data = db.readDataUsers()
                 var msg = ""
                 for (i in 0..(data.size - 1)) {
-                    msg = (data.get(i).id.toString() + " " + data.get(i).username + " " + data.get(i).password + "\n")
+                    msg = (data.get(i).id.toString() + " " + data.get(i).username + " " + data.get(i).password + " " + data.get(i).role + "\n")
                 }
                 Toast.makeText(this,msg,Toast.LENGTH_SHORT).show()
 

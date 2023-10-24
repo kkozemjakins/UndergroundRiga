@@ -17,6 +17,7 @@ class ActivityLogin : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
+
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
@@ -43,13 +44,21 @@ class ActivityLogin : AppCompatActivity() {
         val db = DataBaseHandler(this)
         val data = db.readDataUsers()
 
+
         for (i in 0 until data.size) {
             val user = data[i]
             if (user.username == username && user.password == password) {
                 // Username and password match a record in the database
-                val intent = Intent(this, MapsActivity::class.java)
-                startActivity(intent)
-                return true
+                if (user.role == "1") {
+                        // User has role "1," so go to MapsActivityAdmin
+                    val intent = Intent(this, MapsActivityAdmin::class.java)
+                    startActivity(intent)
+                } else if (user.role == "0") {
+                        // User has role "0," so go to the regular MapsActivity
+                    val intent = Intent(this, MapsActivity::class.java)
+                    startActivity(intent)
+                }
+                    return true
             }
         }
 
@@ -63,8 +72,6 @@ class ActivityLogin : AppCompatActivity() {
         startActivity(intent)
     }
 
-
-    data class User(val id: Int, val username: String, val password: String)
 
 
 

@@ -12,6 +12,7 @@ const val TABLE_NAME = "Users"
 const val COL_USERNAME = "username"
 const val COL_PASSWORD = "password"
 const val COL_ID = "id"
+const val COL_ROLE = "role"
 
 const val TABLE_NAME_MAPS = "MapsPlaces"
 const val COL_PLACESID = "PlacesId"
@@ -19,20 +20,25 @@ const val COL_PLACENAME = "PlaceName"
 const val COL_DESCRIPTION = "Description"
 
 class DataBaseHandler(var context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null, 1) {
+
+
     override fun onCreate(db: SQLiteDatabase?) {
-        val createTable = "CREATE TABLE " + TABLE_NAME + "(" +
+        val createTableUsers = "CREATE TABLE " + TABLE_NAME + "(" +
                 COL_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 COL_USERNAME + " VARCHAR(12), " +
-                COL_PASSWORD + " VARCHAR(15));"
+                COL_PASSWORD + " VARCHAR(15), " +
+                COL_ROLE + " VARCHAR(1));"
 
         val createTablePlaces = "CREATE TABLE " + TABLE_NAME_MAPS + "(" +
                 COL_PLACESID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 COL_PLACENAME + " TEXT, " +
-                COL_DESCRIPTION + " TEXT;"
+                COL_DESCRIPTION + " TEXT);"
 
 
-        db?.execSQL(createTable)
+        db?.execSQL(createTableUsers)
         db?.execSQL(createTablePlaces)
+
+
     }
 
     override fun onUpgrade(p0: SQLiteDatabase?, p1: Int, p2: Int) {
@@ -45,6 +51,7 @@ class DataBaseHandler(var context: Context) : SQLiteOpenHelper(context, DATABASE
         var cv = ContentValues()
         cv.put(COL_USERNAME,user.username)
         cv.put(COL_PASSWORD,user.password)
+        cv.put(COL_ROLE,user.role)
 
         var result = db.insert(TABLE_NAME,null, cv)
 
@@ -107,6 +114,7 @@ class DataBaseHandler(var context: Context) : SQLiteOpenHelper(context, DATABASE
                 user.id = result.getString(result.getColumnIndex(COL_ID)).toInt()
                 user.username = result.getString(result.getColumnIndex(COL_USERNAME))
                 user.password = result.getString(result.getColumnIndex(COL_PASSWORD))
+                user.role = result.getString(result.getColumnIndex(COL_ROLE))
                 list.add(user)
             }while (result.moveToNext())
         }
@@ -115,6 +123,30 @@ class DataBaseHandler(var context: Context) : SQLiteOpenHelper(context, DATABASE
         db.close()
         return list
 
+    }
+
+    fun deleteDataUser(){
+        val db = this.writableDatabase
+        db.delete(TABLE_NAME,null,null)
+        db.close()
+    }
+
+    fun updateDataUser(){
+        val db = this.writableDatabase
+        val query = "Select * from " + TABLE_NAME
+        val result = db.rawQuery(query,null)
+        if(result.moveToFirst()){
+            do {
+                var cv = ContentValues()
+                cv.put(COL_PASSWORD,(result.getInt(result.getColumnIndex(COL_PASSWORD))+1))
+                db.update(TABLE_NAME,cv,COL_ID + "=? AND " + COL_USERNAME + "=?",
+                    arrayOf(result.getString(result.getColumnIndex(COL_ID)),
+                        result.getString(result.getColumnIndex(COL_USERNAME))))
+            }while (result.moveToNext())
+        }
+
+        result.close()
+        db.close()
     }
 
 
