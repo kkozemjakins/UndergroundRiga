@@ -17,6 +17,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.UndergroundRiga"
         tools:targetApi="31">
+
+        <activity
+            android:name=".MainActivityAdmin"
+            android:exported="false" />
+        <activity
+            android:name=".UsersActivityAdmin"
+            android:exported="false" />
         <activity
             android:name=".MapsActivityAdmin"
             android:exported="false" />

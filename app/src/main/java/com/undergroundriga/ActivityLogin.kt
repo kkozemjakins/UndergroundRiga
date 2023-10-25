@@ -50,8 +50,8 @@ class ActivityLogin : AppCompatActivity() {
             if (user.username == username && user.password == password) {
                 // Username and password match a record in the database
                 if (user.role == "1") {
-                        // User has role "1," so go to MapsActivityAdmin
-                    val intent = Intent(this, MapsActivityAdmin::class.java)
+                        // User has role "1," so go to MainActivityAdmin
+                    val intent = Intent(this, MainActivityAdmin::class.java)
                     startActivity(intent)
                 } else if (user.role == "0") {
                         // User has role "0," so go to the regular MapsActivity

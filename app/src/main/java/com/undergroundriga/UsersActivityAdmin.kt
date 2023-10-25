@@ -1,6 +1,5 @@
 package com.undergroundriga
 
-import android.content.ClipDescription
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -11,18 +10,16 @@ import android.widget.TextView
 import android.widget.Toast
 
 
-class MapsActivityAdmin: AppCompatActivity() {
+class UsersActivityAdmin: AppCompatActivity() {
 
     private lateinit var btn_insert: Button
     private lateinit var btn_delete: Button
     private lateinit var btn_update: Button
     private lateinit var btn_read: Button
 
-    private lateinit var etPlaceName: EditText
-    private lateinit var etDescription : EditText
-    private lateinit var etTag: EditText
-    private lateinit var etPosX: EditText
-    private lateinit var etPosY: EditText
+    private lateinit var etPassword: EditText
+    private lateinit var etUsername: EditText
+    private lateinit var etRole: EditText
 
     private lateinit var tvResult: TextView
 
@@ -31,7 +28,7 @@ class MapsActivityAdmin: AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_maps_admin)
+        setContentView(R.layout.activity_users_admin)
 
         val context = this
         var db = DataBaseHandler(context)
@@ -41,34 +38,27 @@ class MapsActivityAdmin: AppCompatActivity() {
         btn_delete = findViewById(R.id.btn_delete)
         btn_update = findViewById(R.id.btn_update)
         btn_read = findViewById(R.id.btn_read)
-
-        etPlaceName = findViewById(R.id.etPlaceName)
-        etDescription = findViewById(R.id.etDescription)
-        etTag = findViewById(R.id.etTag)
-        etPosX = findViewById(R.id.etPosX)
-        etPosY = findViewById(R.id.etPosY)
-
+        etPassword = findViewById(R.id.etPassword)
+        etUsername = findViewById(R.id.etUsername)
+        etRole = findViewById(R.id.etRole)
         tvResult = findViewById(R.id.tvResult)
 
         btn_insert.setOnClickListener({
-            if (etPlaceName.text.toString().length > 0 && etDescription.text.toString().length > 0 && etTag.text.toString().length > 0 && etPosX.text.toString().length > 0 && etPosY.text.toString().length > 0) {
-                var place = Places(etPlaceName.text.toString(), etDescription.text.toString(), etTag.text.toString(), etPosX.text.toString(), etPosY.text.toString())
-                db.insertDataPlaces(place)
+            if (etUsername.text.toString().length > 0 &&
+                etPassword.text.toString().length > 0 &&
+                etRole.text.toString().length > 0) {
+                var user = User(etUsername.text.toString(),etPassword.text.toString(),etRole.text.toString())
+                db.insertData(user)
             } else {
                 Toast.makeText(context,"Please Fill All Data's",Toast.LENGTH_SHORT).show()
             }
         })
 
         btn_read.setOnClickListener({
-            var data = db.readDataMapsPlaces()
+            var data = db.readDataUsers()
             tvResult.text = ""
             for (i in 0..(data.size - 1)) {
-                tvResult.append(data.get(i).PlacesId.toString() + " "
-                        + data.get(i).PlaceName + " "
-                        + data.get(i).Description + " "
-                        + data.get(i).Tag + " "
-                        + data.get(i).PosX + " "
-                        + data.get(i).PosY + "\n")
+                tvResult.append(data.get(i).id.toString() + " " + data.get(i).username + " " + data.get(i).password + " " + data.get(i).role + "\n")
             }
         })
 

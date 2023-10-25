@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".MapsActivityAdmin">
+    tools:context=".UsersActivityAdmin">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -26,44 +26,26 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <EditText
-            android:id="@+id/etPlaceName"
+            android:id="@+id/etUsername"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:padding="10dp"
-            android:hint="PlaceName"/>
+            android:padding="10dp" />
 
         <EditText
-            android:id="@+id/etDescription"
+            android:id="@+id/etPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:padding="10dp"
-            android:hint="Description"/>
+            android:padding="10dp" />
 
         <EditText
-            android:id="@+id/etTag"
+            android:id="@+id/etRole"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:padding="10dp"
-            android:hint="Tag"/>
-
-        <EditText
-            android:id="@+id/etPosX"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:padding="10dp"
-            android:hint="PosX"/>
-
-        <EditText
-            android:id="@+id/etPosY"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:padding="10dp"
-            android:hint="PosY"/>
+            android:inputType="number"
+            android:padding="10dp" />
 
         <Button
             android:id="@+id/btn_insert"

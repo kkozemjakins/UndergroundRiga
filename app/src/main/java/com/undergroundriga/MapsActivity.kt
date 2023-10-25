@@ -1,6 +1,7 @@
 package com.undergroundriga
 
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 
@@ -28,28 +29,50 @@ internal class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
 
+        val db = DataBaseHandler(this)
+        val data = db.readDataMapsPlaces()
+
+
+        for (i in 0 until data.size) {
+            val places = data[i]
+
+            val MapPoint = LatLng((places.PosX).toDouble(), (places.PosY).toDouble())
+
+            mMap.addMarker(MarkerOptions()
+                .position(MapPoint)
+                .title(places.PlaceName)
+                .snippet(places.Description + "_" + places.Tag))
+
+
+            if (i+1 == data.size){
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(MapPoint, 14f))
+            }
+        }
+
+
+/*
         val rvt = LatLng(56.95306407782407, 24.10447936633287)
-
         val someWhere = LatLng(55.95306407782407, 24.10447936633287)
-
         val MadMaxHome = LatLng(56.958674, 23.605505)
 
         mMap.addMarker(MarkerOptions()
             .position(someWhere)
-            .title("Random Place"))
+            .title("Random Place")
+            .snippet("This is a random place."))
 
         mMap.addMarker(MarkerOptions()
             .position(rvt)
-            .title("Rīgas Valsts Tehnikums"))
+            .title("Rīgas Valsts Tehnikums")
+            .snippet("This is Rīgas Valsts Tehnikums."))
 
         mMap.addMarker(MarkerOptions()
             .position(MadMaxHome)
-            .title("Maksima housik"))
-
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(rvt, 14f))
+            .title("Maksima housik")
+            .snippet("This is Maksima housik."))*/
 
 
     }
+
 
 
 

@@ -18,6 +18,9 @@ const val TABLE_NAME_MAPS = "MapsPlaces"
 const val COL_PLACESID = "PlacesId"
 const val COL_PLACENAME = "PlaceName"
 const val COL_DESCRIPTION = "Description"
+const val COL_POSX = "PosX"
+const val COL_POSY = "PosY"
+const val COL_TAG = "Tag"
 
 class DataBaseHandler(var context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null, 1) {
 
@@ -32,7 +35,10 @@ class DataBaseHandler(var context: Context) : SQLiteOpenHelper(context, DATABASE
         val createTablePlaces = "CREATE TABLE " + TABLE_NAME_MAPS + "(" +
                 COL_PLACESID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 COL_PLACENAME + " TEXT, " +
-                COL_DESCRIPTION + " TEXT);"
+                COL_DESCRIPTION  + " TEXT, " +
+                COL_TAG  + " TEXT, " +
+                COL_POSX  + " TEXT, " +
+                COL_POSY + " TEXT);"
 
 
         db?.execSQL(createTableUsers)
@@ -66,14 +72,18 @@ class DataBaseHandler(var context: Context) : SQLiteOpenHelper(context, DATABASE
     fun insertDataPlaces(places: Places){
 
         val db = this.writableDatabase
-        var cv = ContentValues()
-        cv.put(COL_PLACENAME,places.PlaceName)
-        cv.put(COL_DESCRIPTION,places.Description)
+        var cvPlaces = ContentValues()
+        cvPlaces.put(COL_PLACENAME,places.PlaceName)
+        cvPlaces.put(COL_DESCRIPTION,places.Description)
+        cvPlaces.put(COL_TAG,places.Tag)
+        cvPlaces.put(COL_POSX,places.PosX)
+        cvPlaces.put(COL_POSY,places.PosY)
 
-        var result = db.insert(TABLE_NAME_MAPS,null, cv)
+        var result = db.insert(TABLE_NAME_MAPS,null, cvPlaces)
 
         if(result == -1.toLong()){
-            Toast.makeText(context, "Failed", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, "Failed" + places.PlaceName+places.Description+
+                    places.Tag+places.PosX+places.PosY, Toast.LENGTH_SHORT).show()
         }else{
             Toast.makeText(context, "Success", Toast.LENGTH_SHORT).show()}
 
@@ -92,6 +102,7 @@ class DataBaseHandler(var context: Context) : SQLiteOpenHelper(context, DATABASE
                 places.PlacesId = result.getString(result.getColumnIndex(COL_PLACESID)).toInt()
                 places.PlaceName = result.getString(result.getColumnIndex(COL_PLACENAME))
                 places.Description = result.getString(result.getColumnIndex(COL_DESCRIPTION))
+                places.Tag = result.getString(result.getColumnIndex(COL_TAG))
                 list.add(places)
             }while (result.moveToNext())
         }
