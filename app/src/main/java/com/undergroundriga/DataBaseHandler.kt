@@ -217,5 +217,10 @@ class DataBaseHandler(var context: Context) : SQLiteOpenHelper(context, DATABASE
 
 
 
-
+/*56.9514998970168,
+  24.10635958457534
+* Zviedru vārti
+17. gadsimta vārti saglabājies viduslaiku pilsētas mūra posms.
+*
+sight*/
 }
