@@ -169,23 +169,50 @@ class DataBaseHandler(var context: Context) : SQLiteOpenHelper(context, DATABASE
     }
 
 
-    fun updateDataUser(){
+    fun updateUserData(id: Int, newUsername: String, newPassword: String, newRole: String) {
         val db = this.writableDatabase
-        val query = "Select * from " + TABLE_NAME
-        val result = db.rawQuery(query,null)
-        if(result.moveToFirst()){
-            do {
-                var cv = ContentValues()
-                cv.put(COL_PASSWORD,(result.getInt(result.getColumnIndex(COL_PASSWORD))+1))
-                db.update(TABLE_NAME,cv,COL_ID + "=? AND " + COL_USERNAME + "=?",
-                    arrayOf(result.getString(result.getColumnIndex(COL_ID)),
-                        result.getString(result.getColumnIndex(COL_USERNAME))))
-            }while (result.moveToNext())
-        }
+        val cv = ContentValues()
 
-        result.close()
+        cv.put(COL_USERNAME, newUsername)
+        cv.put(COL_PASSWORD, newPassword)
+        cv.put(COL_ROLE, newRole)
+
+        val whereClause = "$COL_ID = ?"
+        val whereArgs = arrayOf(id.toString())
+
+        val result = db.update(TABLE_NAME, cv, whereClause, whereArgs)
         db.close()
+
+        if (result != -1) {
+            Toast.makeText(context, "User with ID $id updated successfully", Toast.LENGTH_SHORT).show()
+        } else {
+            Toast.makeText(context, "Failed to update user with ID $id", Toast.LENGTH_SHORT).show()
+        }
     }
+
+    fun updateDataPlaces(id: Int, newPlaceName: String, newDescription: String, newTag: String, newPosX: String, newPosY: String) {
+        val db = this.writableDatabase
+        val cv = ContentValues()
+
+        cv.put(COL_PLACENAME, newPlaceName)
+        cv.put(COL_DESCRIPTION, newDescription)
+        cv.put(COL_TAG, newTag)
+        cv.put(COL_POSX, newPosX)
+        cv.put(COL_POSY, newPosY)
+
+        val whereClause = "$COL_PLACESID = ?"
+        val whereArgs = arrayOf(id.toString())
+
+        val result = db.update(TABLE_NAME_MAPS, cv, whereClause, whereArgs)
+        db.close()
+
+        if (result != -1) {
+            Toast.makeText(context, "Place with ID $id updated successfully", Toast.LENGTH_SHORT).show()
+        } else {
+            Toast.makeText(context, "Failed to update place with ID $id", Toast.LENGTH_SHORT).show()
+        }
+    }
+
 
 
 

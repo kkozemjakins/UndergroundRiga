@@ -17,7 +17,7 @@ class MapsActivityAdmin: AppCompatActivity() {
     private lateinit var btn_delete: Button
     private lateinit var btn_update: Button
     private lateinit var btn_read: Button
-    private lateinit var etDeletePlaceId: EditText
+    private lateinit var etPlaceId: EditText
 
     private lateinit var etPlaceName: EditText
     private lateinit var etDescription : EditText
@@ -42,7 +42,7 @@ class MapsActivityAdmin: AppCompatActivity() {
         btn_delete = findViewById(R.id.btn_delete)
         btn_update = findViewById(R.id.btn_update)
         btn_read = findViewById(R.id.btn_read)
-        etDeletePlaceId = findViewById(R.id.etDeletePlaceId)
+        etPlaceId = findViewById(R.id.etPlaceId)
 
         etPlaceName = findViewById(R.id.etPlaceName)
         etDescription = findViewById(R.id.etDescription)
@@ -75,12 +75,18 @@ class MapsActivityAdmin: AppCompatActivity() {
         })
 
         btn_update.setOnClickListener({
-            //db.updateData()
-            btn_read.performClick()
+            val PlaceIdText = etPlaceId.text.toString()
+            if (PlaceIdText.isNotEmpty() && etPlaceName.text.toString().length > 0 && etDescription.text.toString().length > 0 && etTag.text.toString().length > 0 && etPosX.text.toString().length > 0 && etPosY.text.toString().length > 0) {
+                val PlaceId = PlaceIdText.toInt()
+                db.updateDataPlaces(PlaceId,etPlaceName.text.toString(),etDescription.text.toString(),etTag.text.toString(),etPosX.text.toString(),etPosY.text.toString())
+                btn_read.performClick()
+            } else {
+                Toast.makeText(context, "Please enter a valid User ID to delete", Toast.LENGTH_SHORT).show()
+            }
         })
 
         btn_delete.setOnClickListener({
-            val placeIdText = etDeletePlaceId.text.toString()
+            val placeIdText = etPlaceId.text.toString()
             if (placeIdText.isNotEmpty()) {
                 val placeId = placeIdText.toInt()
                 db.deleteMapsData(placeId)

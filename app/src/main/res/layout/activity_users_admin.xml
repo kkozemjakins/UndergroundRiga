@@ -30,14 +30,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:padding="10dp" />
+            android:padding="10dp"
+            android:hint="Username"/>
 
         <EditText
             android:id="@+id/etPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:padding="10dp" />
+            android:padding="10dp"
+            android:hint="Password"/>
 
         <EditText
             android:id="@+id/etRole"
@@ -45,7 +47,8 @@
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:inputType="number"
-            android:padding="10dp" />
+            android:padding="10dp"
+            android:hint="Role"/>
 
         <Button
             android:id="@+id/btn_insert"
@@ -56,12 +59,27 @@
             android:text="Insert" />
 
     </LinearLayout>
+    <TextView
+        android:id="@+id/tvAboutField"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="For any changes use this field bellow:"
+        android:textAlignment="center"/>
+
+    <EditText
+        android:id="@+id/etUserId"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:hint="UserId"
+        android:inputType="number"
+        android:padding="10dp" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:weightSum="4">
+        android:weightSum="3">
 
         <Button
             android:id="@+id/btn_read"
@@ -81,14 +99,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="Delete"/>
-        <EditText
-            android:id="@+id/etDeleteUserId"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:hint="UserId"
-            android:inputType="number"
-            android:padding="10dp" />
+
 
 
 
