@@ -44,6 +44,8 @@ class DataBaseHandler(var context: Context) : SQLiteOpenHelper(context, DATABASE
         db?.execSQL(createTableUsers)
         db?.execSQL(createTablePlaces)
 
+        /*val admin = User("admin","admin", "1")
+        insertData(admin)*/
 
     }
 
@@ -103,6 +105,8 @@ class DataBaseHandler(var context: Context) : SQLiteOpenHelper(context, DATABASE
                 places.PlaceName = result.getString(result.getColumnIndex(COL_PLACENAME))
                 places.Description = result.getString(result.getColumnIndex(COL_DESCRIPTION))
                 places.Tag = result.getString(result.getColumnIndex(COL_TAG))
+                places.PosX = result.getString(result.getColumnIndex(COL_POSX))
+                places.PosY = result.getString(result.getColumnIndex(COL_POSY))
                 list.add(places)
             }while (result.moveToNext())
         }
