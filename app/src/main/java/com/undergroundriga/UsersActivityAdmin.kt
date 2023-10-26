@@ -16,6 +16,7 @@ class UsersActivityAdmin: AppCompatActivity() {
     private lateinit var btn_delete: Button
     private lateinit var btn_update: Button
     private lateinit var btn_read: Button
+    private lateinit var etDeleteUserId: EditText
 
     private lateinit var etPassword: EditText
     private lateinit var etUsername: EditText
@@ -38,9 +39,12 @@ class UsersActivityAdmin: AppCompatActivity() {
         btn_delete = findViewById(R.id.btn_delete)
         btn_update = findViewById(R.id.btn_update)
         btn_read = findViewById(R.id.btn_read)
+        etDeleteUserId = findViewById(R.id.etDeleteUserId)
+
         etPassword = findViewById(R.id.etPassword)
         etUsername = findViewById(R.id.etUsername)
         etRole = findViewById(R.id.etRole)
+
         tvResult = findViewById(R.id.tvResult)
 
         btn_insert.setOnClickListener({
@@ -68,8 +72,14 @@ class UsersActivityAdmin: AppCompatActivity() {
         })
 
         btn_delete.setOnClickListener({
-            db.deleteDataUser()
-            btn_read.performClick()
+            val UserIdText = etDeleteUserId.text.toString()
+            if (UserIdText.isNotEmpty()) {
+                val UserId = UserIdText.toInt()
+                db.deleteUserData(UserId)
+                btn_read.performClick()
+            } else {
+                Toast.makeText(context, "Please enter a valid User ID to delete", Toast.LENGTH_SHORT).show()
+            }
         })
     }
 

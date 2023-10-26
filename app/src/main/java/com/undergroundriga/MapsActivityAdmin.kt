@@ -17,6 +17,7 @@ class MapsActivityAdmin: AppCompatActivity() {
     private lateinit var btn_delete: Button
     private lateinit var btn_update: Button
     private lateinit var btn_read: Button
+    private lateinit var etDeletePlaceId: EditText
 
     private lateinit var etPlaceName: EditText
     private lateinit var etDescription : EditText
@@ -41,6 +42,7 @@ class MapsActivityAdmin: AppCompatActivity() {
         btn_delete = findViewById(R.id.btn_delete)
         btn_update = findViewById(R.id.btn_update)
         btn_read = findViewById(R.id.btn_read)
+        etDeletePlaceId = findViewById(R.id.etDeletePlaceId)
 
         etPlaceName = findViewById(R.id.etPlaceName)
         etDescription = findViewById(R.id.etDescription)
@@ -78,9 +80,16 @@ class MapsActivityAdmin: AppCompatActivity() {
         })
 
         btn_delete.setOnClickListener({
-            db.deleteDataUser()
-            btn_read.performClick()
+            val placeIdText = etDeletePlaceId.text.toString()
+            if (placeIdText.isNotEmpty()) {
+                val placeId = placeIdText.toInt()
+                db.deleteMapsData(placeId)
+                btn_read.performClick()
+            } else {
+                Toast.makeText(context, "Please enter a valid Place ID to delete", Toast.LENGTH_SHORT).show()
+            }
         })
+
     }
 
     fun goToMain(view: View) {

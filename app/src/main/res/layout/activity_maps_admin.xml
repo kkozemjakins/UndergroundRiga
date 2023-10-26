@@ -79,7 +79,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:weightSum="3">
+        android:weightSum="4">
 
         <Button
             android:id="@+id/btn_read"
@@ -100,8 +100,21 @@
             android:layout_weight="1"
             android:text="Delete"/>
 
+        <EditText
+            android:id="@+id/etDeletePlaceId"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:hint="PlaceId"
+            android:inputType="number"
+            android:padding="10dp" />
+
+
+
 
     </LinearLayout>
+
+
 
     <ScrollView
         android:layout_width="match_parent"
@@ -113,9 +126,7 @@
             android:layout_height="wrap_content" />
 
 
-
     </ScrollView>
-
 
 
 </LinearLayout>

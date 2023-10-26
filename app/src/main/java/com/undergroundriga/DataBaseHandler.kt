@@ -140,11 +140,34 @@ class DataBaseHandler(var context: Context) : SQLiteOpenHelper(context, DATABASE
 
     }
 
-    fun deleteDataUser(){
+    fun deleteUserData(id: Int) {
         val db = this.writableDatabase
-        db.delete(TABLE_NAME,null,null)
+        val whereClause = "$COL_ID = ?"
+        val whereArgs = arrayOf(id.toString())
+        val result = db.delete(TABLE_NAME, whereClause, whereArgs)
         db.close()
+
+        if (result != -1) {
+            Toast.makeText(context, "User with ID $id deleted successfully", Toast.LENGTH_SHORT).show()
+        } else {
+            Toast.makeText(context, "Failed to delete user with ID $id", Toast.LENGTH_SHORT).show()
+        }
     }
+
+    fun deleteMapsData(id: Int) {
+        val db = this.writableDatabase
+        val whereClause = "$COL_PLACESID = ?"
+        val whereArgs = arrayOf(id.toString())
+        val result = db.delete(TABLE_NAME_MAPS, whereClause, whereArgs)
+        db.close()
+
+        if (result != -1) {
+            Toast.makeText(context, "Place with ID $id deleted successfully", Toast.LENGTH_SHORT).show()
+        } else {
+            Toast.makeText(context, "Failed to delete user with ID $id", Toast.LENGTH_SHORT).show()
+        }
+    }
+
 
     fun updateDataUser(){
         val db = this.writableDatabase
