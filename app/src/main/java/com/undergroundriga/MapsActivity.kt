@@ -1,10 +1,11 @@
 package com.undergroundriga
 
-
-import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-
+import android.view.View
+import android.widget.Button
+import android.widget.LinearLayout
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.FragmentManager
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -12,18 +13,39 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 
-internal class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
+class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
     private lateinit var mMap: GoogleMap
+    private lateinit var vMenu: LinearLayout
+    private lateinit var bHideMenu: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_maps)
-        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
-        val mapFragment = supportFragmentManager
-            .findFragmentById(R.id.map) as SupportMapFragment
+
+        initializeViews()
+        setupButtonListeners()
+    }
+
+    private fun initializeViews() {
+        val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
 
+        vMenu = findViewById(R.id.vMenu)
+        bHideMenu = findViewById(R.id.bHideMenu)
+    }
+
+    private fun setupButtonListeners() {
+        val myButton = findViewById<Button>(R.id.myButton)
+        val buttonHideMenu = findViewById<Button>(R.id.bHideMenu)
+
+        myButton.setOnClickListener {
+            toggleMenuWidth()
+        }
+
+        buttonHideMenu.setOnClickListener {
+            toggleHideMenuWidth()
+        }
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
@@ -32,49 +54,52 @@ internal class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         val db = DataBaseHandler(this)
         val data = db.readDataMapsPlaces()
 
+        data.forEach { places ->
+            val mapPoint = LatLng(places.PosX.toDouble(), places.PosY.toDouble())
 
-        for (i in 0 until data.size) {
-            val places = data[i]
+            mMap.addMarker(
+                MarkerOptions()
+                    .position(mapPoint)
+                    .title(places.PlaceName)
+                    .snippet("${places.Description}_${places.Tag}")
+            )
 
-            val MapPoint = LatLng((places.PosX).toDouble(), (places.PosY).toDouble())
-
-            mMap.addMarker(MarkerOptions()
-                .position(MapPoint)
-                .title(places.PlaceName)
-                .snippet(places.Description + "_" + places.Tag))
-
-
-            if (i+1 == data.size){
-                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(MapPoint, 14f))
+            if (places == data.last()) {
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(mapPoint, 14f))
             }
         }
-
-
-/*
-        val rvt = LatLng(56.95306407782407, 24.10447936633287)
-        val someWhere = LatLng(55.95306407782407, 24.10447936633287)
-        val MadMaxHome = LatLng(56.958674, 23.605505)
-
-        mMap.addMarker(MarkerOptions()
-            .position(someWhere)
-            .title("Random Place")
-            .snippet("This is a random place."))
-
-        mMap.addMarker(MarkerOptions()
-            .position(rvt)
-            .title("Rīgas Valsts Tehnikums")
-            .snippet("This is Rīgas Valsts Tehnikums."))
-
-        mMap.addMarker(MarkerOptions()
-            .position(MadMaxHome)
-            .title("Maksima housik")
-            .snippet("This is Maksima housik."))*/
-
-
     }
 
+    private fun toggleMenuWidth() {
+        val layoutParams = vMenu.layoutParams
+        val layoutParamsB = bHideMenu.layoutParams
 
+        if (layoutParams.width == 0 && layoutParamsB.width == 0) {
+            layoutParams.width = resources.getDimensionPixelSize(R.dimen.menu_width)
+            layoutParamsB.width = resources.getDimensionPixelSize(R.dimen.button_menu_width_hide)
+        } else {
+            layoutParams.width = 0
+            layoutParamsB.width = 0
+        }
 
+        vMenu.layoutParams = layoutParams
+        bHideMenu.layoutParams = layoutParamsB
+    }
 
+    private fun toggleHideMenuWidth() {
+        val layoutParams = vMenu.layoutParams
+        val layoutParamsB = bHideMenu.layoutParams
+
+        if (layoutParams.width == resources.getDimensionPixelSize(R.dimen.menu_width) &&
+            layoutParamsB.width == resources.getDimensionPixelSize(R.dimen.button_menu_width_hide)) {
+            layoutParams.width = resources.getDimensionPixelSize(R.dimen.menu_width_hide)
+            layoutParamsB.width = resources.getDimensionPixelSize(R.dimen.hide_button_menu_width_hide)
+        } else {
+            layoutParams.width = resources.getDimensionPixelSize(R.dimen.menu_width)
+            layoutParamsB.width = resources.getDimensionPixelSize(R.dimen.button_menu_width_hide)
+        }
+
+        vMenu.layoutParams = layoutParams
+        bHideMenu.layoutParams = layoutParamsB
+    }
 }
-
