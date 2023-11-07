@@ -32,7 +32,7 @@
 
     <LinearLayout
         android:id="@+id/vMenu"
-        android:layout_width="250dp"
+        android:layout_width="0dp"
         android:layout_height="match_parent"
         android:background="#16355A"
         android:layout_gravity="right"
