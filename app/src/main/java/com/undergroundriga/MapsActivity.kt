@@ -1,7 +1,9 @@
 package com.undergroundriga
 
 import android.os.Bundle
-import android.view.View
+import android.content.Context
+import android.content.Intent
+import android.widget.TextView
 import android.widget.Button
 import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
@@ -12,16 +14,58 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
+import android.content.SharedPreferences
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
     private lateinit var mMap: GoogleMap
     private lateinit var vMenu: LinearLayout
     private lateinit var bHideMenu: Button
+    private lateinit var userTV: TextView
+    private lateinit var logoutBtn: Button
+
+    lateinit var sharedPreferences: SharedPreferences
+    var PREFS_KEY = "prefs"
+    var USER_KEY = "user"
+    var usr = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_maps)
+
+        userTV = findViewById(R.id.idTVUserName)
+        logoutBtn = findViewById(R.id.idBtnLogOut)
+
+        sharedPreferences = getSharedPreferences(PREFS_KEY, Context.MODE_PRIVATE)
+
+        usr = sharedPreferences.getString(USER_KEY, null)!!
+
+        userTV.setText("Welcome, $usr !")
+
+        logoutBtn.setOnClickListener {
+
+            // on below line we are creating a variable for
+            // editor of shared preferences and initializing it.
+            val editor: SharedPreferences.Editor = sharedPreferences.edit()
+
+            // on below line we are clearing our editor.
+            editor.clear()
+
+            // on below line we are applying changes which are cleared.
+            editor.apply()
+
+            // on below line we are opening our mainactivity by calling intent
+            val i = Intent(this@MapsActivity, MainActivity::class.java)
+
+            // on below line we are simply starting
+            // our activity to start main activity
+            startActivity(i)
+
+            // on below line we are calling
+            // finish to close our main activity.
+            finish()
+        }
+
 
         initializeViews()
         setupButtonListeners()
