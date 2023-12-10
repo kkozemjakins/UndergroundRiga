@@ -9,7 +9,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="494dp"
         android:orientation="vertical">
 
         <Button
@@ -23,47 +23,49 @@
             android:textColor="#000000"
             android:textSize="18sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent" />\
 
         <EditText
             android:id="@+id/etPlaceName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:padding="10dp"
-            android:hint="PlaceName"/>
+            android:hint="PlaceName"
+            android:padding="10dp" />
 
         <EditText
             android:id="@+id/etDescription"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:padding="10dp"
-            android:hint="Description"/>
+            android:hint="Description"
+            android:padding="10dp" />
 
         <EditText
             android:id="@+id/etTag"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:padding="10dp"
-            android:hint="Tag"/>
+            android:hint="Tag"
+            android:padding="10dp" />
 
         <EditText
             android:id="@+id/etPosX"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
+            android:hint="PosX"
             android:padding="10dp"
-            android:hint="PosX"/>
+            android:visibility="gone" />
 
         <EditText
             android:id="@+id/etPosY"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
+            android:hint="PosY"
             android:padding="10dp"
-            android:hint="PosY"/>
+            android:visibility="gone" />/>
 
 
         <Button
@@ -73,6 +75,17 @@
             android:layout_margin="10dp"
             android:padding="10dp"
             android:text="Insert" />
+
+        <fragment
+            android:id="@+id/mapFragment"
+            android:name="com.google.android.gms.maps.SupportMapFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp" />
 
     </LinearLayout>
     <TextView
@@ -123,16 +136,7 @@
 
     </LinearLayout>
 
-    <fragment
-        android:id="@+id/mapFragment"
-        android:name="com.google.android.gms.maps.SupportMapFragment"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="16dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_gravity="center" />
+
 
 
 

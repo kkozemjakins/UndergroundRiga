@@ -29,8 +29,8 @@ class ActivityLogin : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
-        usernameEditText = findViewById(R.id.etPassword)
-        passwordEditText = findViewById(R.id.etUsername)
+        passwordEditText = findViewById(R.id.etPassword)
+        usernameEditText = findViewById(R.id.etUsername)
         loginButton = findViewById(R.id.bSubmitLogin)
         sharedPreferences = getSharedPreferences(PREFS_KEY, Context.MODE_PRIVATE)
 

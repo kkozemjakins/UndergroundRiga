@@ -1,5 +1,6 @@
 package com.undergroundriga
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
@@ -16,8 +17,8 @@ class ActivityReg : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_reg)
 
-        usernameEditText = findViewById(R.id.etPassword)
-        passwordEditText = findViewById(R.id.etUsername)
+        passwordEditText = findViewById(R.id.etPassword)
+        usernameEditText = findViewById(R.id.etUsername)
         regButton = findViewById(R.id.bSubmitReg)
 
         regButton.setOnClickListener {
@@ -32,12 +33,16 @@ class ActivityReg : AppCompatActivity() {
                 var db = DataBaseHandler(this)
                 db.insertData(user)
 
-                var data = db.readDataUsers()
+                /*var data = db.readDataUsers()
                 var msg = ""
                 for (i in 0..(data.size - 1)) {
                     msg = (data.get(i).id.toString() + " " + data.get(i).username + " " + data.get(i).password + " " + data.get(i).role + "\n")
-                }
-                Toast.makeText(this,msg,Toast.LENGTH_SHORT).show()
+                }*/
+                Toast.makeText(this,"Success",Toast.LENGTH_SHORT).show()
+
+                val intent = Intent(this, MainActivity::class.java)
+                startActivity(intent)
+                finish()
 
 
             }else{
