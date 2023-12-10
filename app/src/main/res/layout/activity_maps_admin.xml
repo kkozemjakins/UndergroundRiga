@@ -65,6 +65,7 @@
             android:padding="10dp"
             android:hint="PosY"/>
 
+
         <Button
             android:id="@+id/btn_insert"
             android:layout_width="match_parent"
@@ -121,6 +122,18 @@
 
 
     </LinearLayout>
+
+    <fragment
+        android:id="@+id/mapFragment"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_gravity="center" />
+
 
 
 

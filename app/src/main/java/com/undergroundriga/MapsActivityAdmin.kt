@@ -9,9 +9,15 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
+import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.OnMapReadyCallback
 
 
-class MapsActivityAdmin: AppCompatActivity() {
+
+class MapsActivityAdmin: AppCompatActivity(), OnMapReadyCallback {
 
     private lateinit var btn_insert: Button
     private lateinit var btn_delete: Button
@@ -26,6 +32,9 @@ class MapsActivityAdmin: AppCompatActivity() {
     private lateinit var etPosY: EditText
 
     private lateinit var tvResult: TextView
+
+    private lateinit var mapFragment: SupportMapFragment
+    private lateinit var googleMap: GoogleMap
 
 
 
@@ -51,6 +60,9 @@ class MapsActivityAdmin: AppCompatActivity() {
         etPosY = findViewById(R.id.etPosY)
 
         tvResult = findViewById(R.id.tvResult)
+
+        mapFragment = supportFragmentManager.findFragmentById(R.id.mapFragment) as SupportMapFragment
+        mapFragment.getMapAsync(this)
 
         btn_insert.setOnClickListener({
             if (etPlaceName.text.toString().length > 0 && etDescription.text.toString().length > 0 && etTag.text.toString().length > 0 && etPosX.text.toString().length > 0 && etPosY.text.toString().length > 0) {
@@ -97,6 +109,23 @@ class MapsActivityAdmin: AppCompatActivity() {
         })
 
     }
+
+
+    override fun onMapReady(gMap: GoogleMap) {
+        googleMap = gMap
+
+        // Set up a click listener for the map
+        googleMap.setOnMapClickListener { latLng ->
+            // Handle the click event, you can do whatever you want with the LatLng object
+            etPosX.setText(latLng.latitude.toString())
+            etPosY.setText(latLng.longitude.toString())
+
+            // Add a marker on the clicked position (optional)
+            googleMap.addMarker(MarkerOptions().position(latLng).title("New Marker"))
+        }
+    }
+
+
 
     fun goToMain(view: View) {
         val intent = Intent(this, MainActivity::class.java)
