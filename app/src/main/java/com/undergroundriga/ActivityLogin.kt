@@ -10,6 +10,9 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.google.firebase.FirebaseApp
+import com.google.firebase.ktx.Firebase
+
 
 class ActivityLogin : AppCompatActivity() {
 
@@ -28,6 +31,7 @@ class ActivityLogin : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
+
 
         passwordEditText = findViewById(R.id.etPassword)
         usernameEditText = findViewById(R.id.etUsername)

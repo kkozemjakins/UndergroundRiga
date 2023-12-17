@@ -15,21 +15,33 @@
     <!--        android:scaleType="centerCrop"-->
     <!--        android:src="@drawable/bg_geometry" />-->
 
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="fitEnd"
+        android:src="@drawable/bg_riga_contur_vector" />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="fitStart"
+        android:src="@drawable/bg_lampa" />
+
 
     <TextView
         android:id="@+id/textView"
         android:layout_width="340dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="135dp"
         android:fontFamily="@font/font_family_nunito"
-        android:text="Welcome to Hidden Riga"
+        android:layout_marginBottom="20dp"
+        android:text="Welcome"
         android:textAlignment="center"
         android:textColor="#FFFFFF"
-        android:textSize="40sp"
+        android:textSize="32sp"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView2"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
+        app:layout_constraintStart_toStartOf="parent" />
 
 
     <EditText
@@ -37,25 +49,18 @@
         android:layout_width="245dp"
         android:layout_height="53dp"
         android:layout_marginBottom="251dp"
-        android:background="@color/gray_light"
+        android:background="@drawable/bg_passbar"
         android:fontFamily="@font/font_family_nunito"
-        android:hint="Password"
+        android:hint="             Password"
         android:inputType="textPassword"
         android:maxLength="18"
-        android:textColor="#000000"
         android:textColorHint="@color/black"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <ImageView
-        android:layout_width="53dp"
-        android:layout_height="53dp"
-        android:src="@drawable/ic_passwordsfield"
-        app:layout_constraintBottom_toBottomOf="@+id/etPassword"
-        app:layout_constraintEnd_toStartOf="@+id/etPassword"
-        app:layout_constraintTop_toTopOf="@+id/etPassword" />
+
 
 
     <EditText
@@ -63,25 +68,16 @@
         android:layout_width="245dp"
         android:layout_height="53dp"
         android:layout_marginVertical="42dp"
-        android:background="@color/gray_light"
+        android:background="@drawable/bg_logbar"
         android:fontFamily="@font/font_family_nunito"
-        android:hint="Username"
+        android:hint="             Username"
         android:maxLength="12"
         android:onClick="goToSignIn"
-        android:textColor="#000000"
         android:textColorHint="@color/black"
         android:textSize="18sp"
         app:layout_constraintBottom_toTopOf="@+id/etPassword"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
-
-    <ImageView
-        android:layout_width="53dp"
-        android:layout_height="53dp"
-        android:src="@drawable/ic_usernamefield"
-        app:layout_constraintBottom_toBottomOf="@+id/etUsername"
-        app:layout_constraintEnd_toStartOf="@+id/etUsername"
-        app:layout_constraintTop_toTopOf="@+id/etUsername" />
 
 
     <Button
@@ -101,8 +97,8 @@
         android:id="@+id/bSubmitLogin"
         android:layout_width="154dp"
         android:layout_height="45dp"
-        android:layout_marginTop="72dp"
-        android:backgroundTint="#9FD1FF"
+        android:layout_marginTop="34dp"
+        android:backgroundTint="#A7D1D2"
         android:fontFamily="@font/font_family_nunito"
         android:onClick="isValidCredentials"
         android:text="Log In"
