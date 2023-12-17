@@ -13,6 +13,8 @@ const val COL_USERNAME = "username"
 const val COL_PASSWORD = "password"
 const val COL_ID = "id"
 const val COL_ROLE = "role"
+const val COL_EMAIL = "email"
+
 
 const val TABLE_NAME_MAPS = "MapsPlaces"
 const val COL_PLACESID = "PlacesId"
@@ -30,6 +32,7 @@ class DataBaseHandler(var context: Context) : SQLiteOpenHelper(context, DATABASE
                 COL_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 COL_USERNAME + " VARCHAR(12), " +
                 COL_PASSWORD + " VARCHAR(15), " +
+                COL_EMAIL + " VARCHAR(25), " +
                 COL_ROLE + " VARCHAR(1));"
 
         val createTablePlaces = "CREATE TABLE " + TABLE_NAME_MAPS + "(" +
@@ -49,6 +52,24 @@ class DataBaseHandler(var context: Context) : SQLiteOpenHelper(context, DATABASE
 
     }
 
+    fun isUsernameExists(username: String): Boolean {
+        val db = this.readableDatabase
+        val query = "SELECT * FROM $TABLE_NAME WHERE $COL_USERNAME = ?"
+        val cursor: Cursor = db.rawQuery(query, arrayOf(username))
+        val exists = cursor.count > 0
+        cursor.close()
+        return exists
+    }
+
+    fun isEmailExists(email: String): Boolean {
+        val db = this.readableDatabase
+        val query = "SELECT * FROM $TABLE_NAME WHERE $COL_EMAIL = ?"
+        val cursor: Cursor = db.rawQuery(query, arrayOf(email))
+        val exists = cursor.count > 0
+        cursor.close()
+        return exists
+    }
+
     override fun onUpgrade(p0: SQLiteDatabase?, p1: Int, p2: Int) {
         TODO("Not yet implemented")
     }
@@ -59,6 +80,7 @@ class DataBaseHandler(var context: Context) : SQLiteOpenHelper(context, DATABASE
         var cv = ContentValues()
         cv.put(COL_USERNAME,user.username)
         cv.put(COL_PASSWORD,user.password)
+        cv.put(COL_EMAIL,user.email)
         cv.put(COL_ROLE,user.role)
 
         var result = db.insert(TABLE_NAME,null, cv)
@@ -129,6 +151,7 @@ class DataBaseHandler(var context: Context) : SQLiteOpenHelper(context, DATABASE
                 user.id = result.getString(result.getColumnIndex(COL_ID)).toInt()
                 user.username = result.getString(result.getColumnIndex(COL_USERNAME))
                 user.password = result.getString(result.getColumnIndex(COL_PASSWORD))
+                user.email = result.getString(result.getColumnIndex(COL_EMAIL))
                 user.role = result.getString(result.getColumnIndex(COL_ROLE))
                 list.add(user)
             }while (result.moveToNext())

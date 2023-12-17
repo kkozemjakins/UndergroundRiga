@@ -12,46 +12,44 @@ class ActivityReg : AppCompatActivity() {
 
     private lateinit var usernameEditText: EditText
     private lateinit var passwordEditText: EditText
+    private lateinit var passwordRepeatEditText: EditText
+    private lateinit var emailEditText: EditText
     private lateinit var regButton: Button
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_reg)
 
-        passwordEditText = findViewById(R.id.etPassword)
-        usernameEditText = findViewById(R.id.etUsername)
-        regButton = findViewById(R.id.bSubmitReg)
-
         regButton.setOnClickListener {
-            // Handle login button click here
+            // Handle registration button click here
             val username = usernameEditText.text.toString()
             val password = passwordEditText.text.toString()
+            val email = emailEditText.text.toString()
+            val repeatPassword = passwordRepeatEditText.text.toString()
             val role = "0"
-            (
-            if(username.length > 0 &&
-                password.length > 0) {
-                var user = User(username,password, role)
-                var db = DataBaseHandler(this)
-                db.insertData(user)
 
-                /*var data = db.readDataUsers()
-                var msg = ""
-                for (i in 0..(data.size - 1)) {
-                    msg = (data.get(i).id.toString() + " " + data.get(i).username + " " + data.get(i).password + " " + data.get(i).role + "\n")
-                }*/
-                Toast.makeText(this,"Success",Toast.LENGTH_SHORT).show()
+            if (username.isNotEmpty() && password.isNotEmpty() && email.isNotEmpty() && repeatPassword.isNotEmpty()) {
+                // Check if username or email already exists
+                val db = DataBaseHandler(this)
+                if (db.isUsernameExists(username)) {
+                    Toast.makeText(this, "Username already exists", Toast.LENGTH_SHORT).show()
+                } else if (db.isEmailExists(email)) {
+                    Toast.makeText(this, "Email already exists", Toast.LENGTH_SHORT).show()
+                } else {
+                    // Insert the new user if username and email are unique
+                    val user = User(username, password, email, role)
+                    db.insertData(user)
 
-                val intent = Intent(this, MainActivity::class.java)
-                startActivity(intent)
-                finish()
+                    Toast.makeText(this, "Registration successful", Toast.LENGTH_SHORT).show()
 
-
-            }else{
-                Toast.makeText(this,"Please Fill All Data`s",Toast.LENGTH_SHORT).show()
-
-            })
-
-
+                    val intent = Intent(this, MainActivity::class.java)
+                    startActivity(intent)
+                    finish()
+                }
+            } else {
+                Toast.makeText(this, "Please fill all fields", Toast.LENGTH_SHORT).show()
+            }
         }
+
 
     }
 }

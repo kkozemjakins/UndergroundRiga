@@ -34,6 +34,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import android.location.LocationListener
 import android.widget.ImageButton
+import android.widget.ImageView
 
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback, LocationListener {
@@ -44,6 +45,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, LocationListener {
     private lateinit var bHideMenu: Button
     private lateinit var userTV: TextView
     private lateinit var logoutBtn: Button
+
+    private lateinit var ivFocusOnLocation: ImageView
 
     private val YOUR_PERMISSION_REQUEST_CODE = 123 // Use any unique integer value
 
@@ -107,15 +110,17 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, LocationListener {
 
         vMenu = findViewById(R.id.vMenu)
         bHideMenu = findViewById(R.id.bHideMenu)
-        val btnFocusOnLocation = findViewById<ImageButton>(R.id.btnFocusOnLocation)
 
-        btnFocusOnLocation.setOnClickListener {
+        val ivFocusOnLocation = findViewById<ImageView>(R.id.ivFocusOnLocation)
+
+        ivFocusOnLocation.setOnClickListener {
             focusOnUserLocation()
         }
     }
 
+
     private fun setupButtonListeners() {
-        val myButton = findViewById<Button>(R.id.btnMenu)
+        val myButton = findViewById<ImageView>(R.id.ivMenu)
         val buttonHideMenu = findViewById<Button>(R.id.bHideMenu)
 
         myButton.setOnClickListener {

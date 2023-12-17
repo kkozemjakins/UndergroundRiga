@@ -44,6 +44,7 @@ class UsersActivityAdmin: AppCompatActivity() {
         etPassword = findViewById(R.id.etPassword)
         etUsername = findViewById(R.id.etUsername)
         etRole = findViewById(R.id.etRole)
+        val etEmail = "example.com"
 
         tvResult = findViewById(R.id.tvResult)
 
@@ -51,7 +52,7 @@ class UsersActivityAdmin: AppCompatActivity() {
             if (etUsername.text.toString().length > 0 &&
                 etPassword.text.toString().length > 0 &&
                 etRole.text.toString().length > 0) {
-                var user = User(etUsername.text.toString(),etPassword.text.toString(),etRole.text.toString())
+                var user = User(etUsername.text.toString(),etPassword.text.toString(),etEmail,etRole.text.toString())
                 db.insertData(user)
             } else {
                 Toast.makeText(context,"Please Fill All Data's",Toast.LENGTH_SHORT).show()
