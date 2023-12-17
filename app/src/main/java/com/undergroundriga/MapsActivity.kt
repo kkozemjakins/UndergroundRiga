@@ -99,6 +99,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, LocationListener {
         setupButtonListeners()
     }
 
+
+
     private fun initializeViews() {
         val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
@@ -145,9 +147,9 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, LocationListener {
                         val currentLatLng = LatLng(location.latitude, location.longitude)
 
                         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 17f))
-                    } else {
-                        Toast.makeText(this, "Current location is null", Toast.LENGTH_SHORT).show()
-                    }
+                    } /*else {
+                        Toast.makeText(this, "" , Toast.LENGTH_SHORT).show()
+                    }*/
                 }
                 .addOnFailureListener { e: Exception ->
                     Toast.makeText(
@@ -180,13 +182,41 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, LocationListener {
             MarkerOptions()
                 .position(currentLatLng)
                 .title("Your Location")
-                .icon(BitmapDescriptorFactory.fromResource(R.drawable.current_location))
+                .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_marker_current_location_cat))
         )
 
         //mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 17f));
         //mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 14f))
     }
 
+
+    fun CheckTagIc(tag: String): Int {
+        return when (tag) {
+            "#Teashops" -> R.drawable.ic_marker_teashop
+            "#Animeshops" -> R.drawable.ic_marker_anime_shop
+            "#Food" -> R.drawable.ic_marker_food
+            "#Graffiti"-> R.drawable.ic_marker_graffiti
+            "#Exotic"-> R.drawable.ic_marker_lavka
+            "#Second hand"-> R.drawable.ic_marker_second_hand
+            "#Toilet"-> R.drawable.ic_marker_toilet
+            "#Vinyl store"-> R.drawable.ic_marker_vinyl
+
+            else -> R.drawable.ic_marker_nothing
+        }
+    }
+
+    /*
+    Tags:
+    "#Teashops"
+    "#Animeshops"
+    "#Food"
+    "#Graffity"
+    "#Exotic"
+    "#Second hand"
+    "#Toilet"
+    "#Vinyl store"
+
+    * */
 
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
@@ -197,14 +227,17 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, LocationListener {
         data.forEach { places ->
             val mapPoint = LatLng(places.PosX.toDouble(), places.PosY.toDouble())
 
-
+            val tag = places.Tag // Replace this with the actual tag you want to check
+            val iconResource = CheckTagIc(tag)
 
             mMap.addMarker(
                 MarkerOptions()
                     .position(mapPoint)
                     .title(places.PlaceName)
                     .snippet("${places.Description}_${places.Tag}")
+                    .icon(BitmapDescriptorFactory.fromResource(iconResource))
             )
+
             /*
                         if (places == data.last()) {
                             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(mapPoint, 14f))
@@ -233,15 +266,15 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, LocationListener {
                             MarkerOptions()
                                 .position(currentLatLng)
                                 .title("Your Location")
-                                .icon(BitmapDescriptorFactory.fromResource(R.drawable.current_location))
+                                .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_marker_current_location_cat))
                         )
                         //mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 17f));
 
                        // mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 14f))
-                    } else {
+                    } /*else {
                         Toast.makeText(this, "Current location is null", Toast.LENGTH_SHORT).show()
 
-                    }
+                    }*/
                 }
                 .addOnFailureListener { e: Exception ->
                     Toast.makeText(this, "Failed to get current location: ${e.message}", Toast.LENGTH_SHORT).show()

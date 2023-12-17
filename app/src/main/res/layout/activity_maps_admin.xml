@@ -41,13 +41,13 @@
             android:hint="Description"
             android:padding="10dp" />
 
-        <EditText
-            android:id="@+id/etTag"
+
+        <Spinner
+            android:id="@+id/spTag"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:hint="Tag"
-            android:padding="10dp" />
+            android:hint="Tag" />
 
         <EditText
             android:id="@+id/etPosX"

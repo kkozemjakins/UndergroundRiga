@@ -14,6 +14,8 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
+import android.widget.ArrayAdapter
+import android.widget.Spinner
 
 
 
@@ -27,7 +29,7 @@ class MapsActivityAdmin: AppCompatActivity(), OnMapReadyCallback {
 
     private lateinit var etPlaceName: EditText
     private lateinit var etDescription : EditText
-    private lateinit var etTag: EditText
+    private lateinit var spTag: Spinner
     private lateinit var etPosX: EditText
     private lateinit var etPosY: EditText
 
@@ -55,7 +57,7 @@ class MapsActivityAdmin: AppCompatActivity(), OnMapReadyCallback {
 
         etPlaceName = findViewById(R.id.etPlaceName)
         etDescription = findViewById(R.id.etDescription)
-        etTag = findViewById(R.id.etTag)
+        spTag = findViewById(R.id.spTag)
         etPosX = findViewById(R.id.etPosX)
         etPosY = findViewById(R.id.etPosY)
 
@@ -64,14 +66,56 @@ class MapsActivityAdmin: AppCompatActivity(), OnMapReadyCallback {
         mapFragment = supportFragmentManager.findFragmentById(R.id.mapFragment) as SupportMapFragment
         mapFragment.getMapAsync(this)
 
-        btn_insert.setOnClickListener({
-            if (etPlaceName.text.toString().length > 0 && etDescription.text.toString().length > 0 && etTag.text.toString().length > 0 && etPosX.text.toString().length > 0 && etPosY.text.toString().length > 0) {
-                var place = Places(etPlaceName.text.toString(), etDescription.text.toString(), etTag.text.toString(), etPosX.text.toString(), etPosY.text.toString())
+        val spinner: Spinner = findViewById(R.id.spTag)
+
+        // Define the values for the dropdown list
+        val items = arrayOf("#Teashops",
+            "#Animeshops",
+            "#Food",
+            "#Graffity",
+            "#Exotic",
+            "#Second hand",
+            "#Toilet",
+            "#Vinyl store")
+
+        /*
+                Tags:
+                "#Teashops"
+                "#Animeshops"
+                "#Food"
+                "#Graffity"
+                "#Exotic"
+                "#Second hand"
+                "#Toilet"
+                "#Vinyl store"
+
+                * */
+
+        // Create an ArrayAdapter using the string array and a default spinner layout
+        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, items)
+
+        // Specify the layout to use when the list of choices appears
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+
+        // Apply the adapter to the spinner
+        spinner.adapter = adapter
+
+        btn_insert.setOnClickListener {
+            val placeName = etPlaceName.text.toString()
+            val description = etDescription.text.toString()
+            val posX = etPosX.text.toString()
+            val posY = etPosY.text.toString()
+
+            // Get the selected item from the Spinner
+            val selectedTag = spTag.selectedItem.toString()
+
+            if (placeName.isNotEmpty() && description.isNotEmpty() && posX.isNotEmpty() && posY.isNotEmpty()) {
+                val place = Places(placeName, description, selectedTag, posX, posY)
                 db.insertDataPlaces(place)
             } else {
-                Toast.makeText(context,"Please Fill All Data's",Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "Please Fill All Data's", Toast.LENGTH_SHORT).show()
             }
-        })
+        }
 
         btn_read.setOnClickListener({
             var data = db.readDataMapsPlaces()
@@ -86,16 +130,28 @@ class MapsActivityAdmin: AppCompatActivity(), OnMapReadyCallback {
             }
         })
 
-        btn_update.setOnClickListener({
-            val PlaceIdText = etPlaceId.text.toString()
-            if (PlaceIdText.isNotEmpty() && etPlaceName.text.toString().length > 0 && etDescription.text.toString().length > 0 && etTag.text.toString().length > 0 && etPosX.text.toString().length > 0 && etPosY.text.toString().length > 0) {
-                val PlaceId = PlaceIdText.toInt()
-                db.updateDataPlaces(PlaceId,etPlaceName.text.toString(),etDescription.text.toString(),etTag.text.toString(),etPosX.text.toString(),etPosY.text.toString())
+        btn_update.setOnClickListener {
+            val placeIdText = etPlaceId.text.toString()
+
+            if (placeIdText.isNotEmpty() && etPlaceName.text.isNotEmpty() && etDescription.text.isNotEmpty() &&
+                spTag.selectedItem.toString().isNotEmpty() && etPosX.text.isNotEmpty() && etPosY.text.isNotEmpty()
+            ) {
+                val placeId = placeIdText.toInt()
+                db.updateDataPlaces(
+                    placeId,
+                    etPlaceName.text.toString(),
+                    etDescription.text.toString(),
+                    spTag.selectedItem.toString(),
+                    etPosX.text.toString(),
+                    etPosY.text.toString()
+                )
                 btn_read.performClick()
             } else {
-                Toast.makeText(context, "Please enter a valid User ID to delete", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "Please fill all fields", Toast.LENGTH_SHORT).show()
             }
-        })
+        }
+
+
 
         btn_delete.setOnClickListener({
             val placeIdText = etPlaceId.text.toString()
