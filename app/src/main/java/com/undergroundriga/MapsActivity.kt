@@ -46,6 +46,9 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, LocationListener {
     private lateinit var userTV: TextView
     private lateinit var logoutBtn: Button
 
+    private val ZOOM_LEVEL_INCREMENT = 1f
+    private val DEFAULT_ZOOM_LEVEL = 10f
+
     private lateinit var ivFocusOnLocation: ImageView
 
     private val YOUR_PERMISSION_REQUEST_CODE = 123 // Use any unique integer value
@@ -72,6 +75,9 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, LocationListener {
         usr = sharedPreferences.getString(USER_KEY, null)!!
 
         userTV.setText("Welcome, $usr !")
+
+
+        ////
 
         logoutBtn.setOnClickListener {
 
@@ -117,6 +123,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, LocationListener {
             focusOnUserLocation()
         }
     }
+
 
 
     private fun setupButtonListeners() {
@@ -195,21 +202,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, LocationListener {
     }
 
 
-    fun CheckTagIc(tag: String): Int {
-        return when (tag) {
-            "#Teashops" -> R.drawable.ic_marker_teashop
-            "#Animeshops" -> R.drawable.ic_marker_anime_shop
-            "#Food" -> R.drawable.ic_marker_food
-            "#Graffiti"-> R.drawable.ic_marker_graffiti
-            "#Exotic"-> R.drawable.ic_marker_lavka
-            "#Second hand"-> R.drawable.ic_marker_second_hand
-            "#Toilet"-> R.drawable.ic_marker_toilet
-            "#Vinyl store"-> R.drawable.ic_marker_vinyl
-
-            else -> R.drawable.ic_marker_nothing
-        }
-    }
-
     /*
     Tags:
     "#Teashops"
@@ -228,6 +220,14 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, LocationListener {
 
         val db = DataBaseHandler(this)
         val data = db.readDataMapsPlaces()
+
+        val latviaLatLng = LatLng(56.9496, 24.1052)
+
+        val zoomOutButton = findViewById<ImageView>(R.id.zoomOutButton)
+        zoomOutButton.setOnClickListener {
+            val currentZoomLevel = googleMap.cameraPosition.zoom
+            googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latviaLatLng, currentZoomLevel - ZOOM_LEVEL_INCREMENT))
+        }
 
         data.forEach { places ->
             val mapPoint = LatLng(places.PosX.toDouble(), places.PosY.toDouble())
@@ -349,3 +349,22 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, LocationListener {
 
 
 }
+
+fun CheckTagIc(tag: String): Int {
+    return when (tag) {
+        "#Teashops" -> R.drawable.ic_marker_teashop
+        "#Animeshops" -> R.drawable.ic_marker_anime_shop
+        "#Food" -> R.drawable.ic_marker_food
+        "#Graffiti"-> R.drawable.ic_marker_graffiti
+        "#Exotic"-> R.drawable.ic_marker_lavka
+        "#Second hand"-> R.drawable.ic_marker_second_hand
+        "#Toilet"-> R.drawable.ic_marker_toilet
+        "#Vinyl store"-> R.drawable.ic_marker_vinyl
+        "#Monument"-> R.drawable.ic_marker_monuments
+
+        else -> R.drawable.ic_marker_404
+    }
+}
+
+
+

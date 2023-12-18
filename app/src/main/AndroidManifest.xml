@@ -26,6 +26,9 @@
         <activity
             android:name=".MainActivityAdmin"
             android:exported="false" />
+        <activity android:name=".ActivityMapsEditData"
+            android:exported="false"/>
+
         <activity
             android:name=".UsersActivityAdmin"
             android:exported="false" />
@@ -56,7 +59,7 @@
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyCqAMK4i9UmVQAMjF0UJjNtQPN38_MChLY" />
+            android:value="AIzaSyAGyDcdBFmDvmBvOoJQ7mRn1vPr9U7iSlo" />
     </application>
 
 </manifest>

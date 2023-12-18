@@ -139,6 +139,64 @@ class DataBaseHandler(var context: Context) : SQLiteOpenHelper(context, DATABASE
 
     }
 
+    fun getAllPlaceNames(): List<String> {
+        val placeNames = mutableListOf<String>()
+        val db = this.readableDatabase
+        val query = "SELECT $COL_PLACENAME FROM $TABLE_NAME_MAPS"
+        val result = db.rawQuery(query, null)
+
+        if (result.moveToFirst()) {
+            do {
+                val placeName = result.getString(result.getColumnIndex(COL_PLACENAME))
+                placeNames.add(placeName)
+            } while (result.moveToNext())
+        }
+
+        result.close()
+        db.close()
+        return placeNames
+    }
+
+    fun getAllPlaceIds(): List<Int> {
+        val placeIds = mutableListOf<Int>()
+        val db = this.readableDatabase
+        val query = "SELECT $COL_PLACESID FROM $TABLE_NAME_MAPS"
+        val result = db.rawQuery(query, null)
+
+        if (result.moveToFirst()) {
+            do {
+                val placeId = result.getInt(result.getColumnIndex(COL_PLACESID))
+                placeIds.add(placeId)
+            } while (result.moveToNext())
+        }
+
+        result.close()
+        db.close()
+        return placeIds
+    }
+
+    fun getAllPlaceNamesAndIds(): List<Pair<Int, String>> {
+        val placeNamesAndIds = mutableListOf<Pair<Int, String>>()
+        val db = this.readableDatabase
+        val query = "SELECT $COL_PLACESID, $COL_PLACENAME FROM $TABLE_NAME_MAPS"
+        val result = db.rawQuery(query, null)
+
+        if (result.moveToFirst()) {
+            do {
+                val placeId = result.getInt(result.getColumnIndex(COL_PLACESID))
+                val placeName = result.getString(result.getColumnIndex(COL_PLACENAME))
+                val pair = Pair(placeId, placeName)
+                placeNamesAndIds.add(pair)
+            } while (result.moveToNext())
+        }
+
+        result.close()
+        db.close()
+        return placeNamesAndIds
+    }
+
+
+
     fun readDataUsers() : MutableList<User>{
         var list : MutableList<User> = ArrayList()
 
@@ -192,12 +250,13 @@ class DataBaseHandler(var context: Context) : SQLiteOpenHelper(context, DATABASE
     }
 
 
-    fun updateUserData(id: Int, newUsername: String, newPassword: String, newRole: String) {
+    fun updateUserData(id: Int, newUsername: String, newPassword: String, newEmail: String ,newRole: String) {
         val db = this.writableDatabase
         val cv = ContentValues()
 
         cv.put(COL_USERNAME, newUsername)
         cv.put(COL_PASSWORD, newPassword)
+        cv.put(COL_EMAIL, newEmail)
         cv.put(COL_ROLE, newRole)
 
         val whereClause = "$COL_ID = ?"

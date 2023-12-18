@@ -14,15 +14,24 @@ class MainActivityAdmin : AppCompatActivity() {
     fun goToUsers(view: View) {
         val intent = Intent(this, UsersActivityAdmin::class.java)
         startActivity(intent)
+        finish()
     }
 
     fun goToMaps(view: View) {
         val intent = Intent(this, MapsActivityAdmin::class.java)
         startActivity(intent)
+        finish()
     }
 
     fun goToMain(view: View) {
         val intent = Intent(this, MainActivity::class.java)
         startActivity(intent)
+        finish()
+    }
+
+    fun goToMapsEdit(view: View) {
+        val intent = Intent(this, ActivityMapsEditData::class.java)
+        startActivity(intent)
+        finish()
     }
 }

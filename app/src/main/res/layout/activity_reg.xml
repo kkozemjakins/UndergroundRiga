@@ -73,7 +73,6 @@
         android:fontFamily="@font/font_family_nunito"
         android:hint="Email"
         android:inputType="textEmailAddress"
-        android:maxLength="12"
         android:paddingLeft="60dp"
         android:textColor="@color/black"
         android:textColorHint="@color/black_opacity"
