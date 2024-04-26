@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
         android:fontFamily="@font/font_family_nunito"
-        android:text="Create new point!"
+        android:text="Suggest new point!"
         android:textAlignment="center"
         android:textColor="#FFFFFF"
         android:textSize="30sp"
@@ -131,7 +131,18 @@
             android:layout_margin="10dp"
             android:backgroundTint="#A7D1D2"
             android:padding="10dp"
-            android:text="Insert" />
+            android:text="Send" />
+
+        <Button
+            android:id="@+id/btn_my_suggest"
+            android:layout_width="252dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="10dp"
+            android:backgroundTint="#A7D1D2"
+            android:padding="-10dp"
+            android:onClick="goToMySuggestions"
+            android:text="My suggestions" />
 
 
     </LinearLayout>
@@ -152,7 +163,7 @@
         android:id="@+id/button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:onClick="goToMainAdmin"
+        android:onClick="goToMapsMain"
         android:text="X"
         android:src="@drawable/b_ic_exit"
         android:textSize="18sp"
